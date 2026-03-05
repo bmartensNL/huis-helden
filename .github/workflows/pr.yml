@@ -29,15 +29,15 @@ jobs:
   coverage-comment:
     name: Coverage Report
     runs-on: ubuntu-latest
-    needs: []
+    env:
+      DATABASE_URL: 'postgresql://user:pass@localhost:5432/dummy'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-      - run: cd backend && npm ci
+      - run: npm ci
       - run: npx prisma generate --schema=prisma/schema.prisma
       - run: cd backend && npx vitest run --coverage
       - uses: davelosert/vitest-coverage-report-action@v2

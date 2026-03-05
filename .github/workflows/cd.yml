@@ -1,17 +1,15 @@
 name: CD
 
 on:
-  push:
+  workflow_run:
+    workflows: ['CI']
+    types: [completed]
     branches: [main]
 
 jobs:
-  ci:
-    name: Wait for CI
-    uses: ./.github/workflows/ci.yml
-
   build-and-push-backend:
     name: Build & Push Backend
-    needs: ci
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,7 +32,7 @@ jobs:
 
   build-and-push-frontend:
     name: Build & Push Frontend
-    needs: ci
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
