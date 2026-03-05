@@ -4,8 +4,7 @@ COPY package.json package-lock.json ./
 COPY backend/package.json ./backend/
 COPY frontend/package.json ./frontend/
 COPY prisma/ ./prisma/
-RUN npm ci --workspace=backend
-RUN npx prisma generate --schema=prisma/schema.prisma
+RUN npm ci --workspace=backend --ignore-scripts && npx prisma generate --schema=prisma/schema.prisma
 COPY backend/ ./backend/
 RUN npm run build --workspace=backend
 
