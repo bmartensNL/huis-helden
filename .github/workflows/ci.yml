@@ -16,8 +16,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-      - run: cd backend && npm ci
+      - run: npm ci
       - run: cd backend && npx eslint src --ext .ts
 
   backend-typecheck:
@@ -29,8 +28,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-      - run: cd backend && npm ci
+      - run: npm ci
       - run: npx prisma generate --schema=prisma/schema.prisma
       - run: cd backend && npx tsc --noEmit
 
@@ -43,8 +41,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-      - run: cd backend && npm ci
+      - run: npm ci
       - run: npx prisma generate --schema=prisma/schema.prisma
       - run: cd backend && npx vitest run --coverage
       - uses: actions/upload-artifact@v4
@@ -62,8 +59,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-      - run: cd backend && npm ci
+      - run: npm ci
       - run: npx prisma generate --schema=prisma/schema.prisma
       - run: cd backend && npm run build
 
@@ -76,8 +72,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-      - run: cd frontend && npm ci
+      - run: npm ci
       - run: cd frontend && npx eslint src --ext .ts
 
   frontend-typecheck:
@@ -89,9 +84,20 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-      - run: cd frontend && npm ci
+      - run: npm ci
       - run: cd frontend && npx tsc --noEmit -p tsconfig.app.json
+
+  frontend-test:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+      - run: npm ci
+      - run: cd frontend && npm test
 
   frontend-build:
     name: Frontend Build
@@ -102,8 +108,7 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-      - run: cd frontend && npm ci
+      - run: npm ci
       - run: cd frontend && npm run build
 
   prisma-validate:
@@ -114,5 +119,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-      - run: npm install -g prisma
-      - run: prisma validate --schema=prisma/schema.prisma
+          cache: 'npm'
+      - run: npm ci
+      - run: npx prisma validate --schema=prisma/schema.prisma

@@ -21,16 +21,23 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "prisma": "^5.10.0",
     "husky": "^9.0.0",
-    "lint-staged": "^15.2.0"
+    "lint-staged": "^15.2.0",
+    "prisma": "^5.10.0"
   },
   "lint-staged": {
-    "backend/src/**/*.ts": ["prettier --write"],
-    "frontend/src/**/*.ts": ["prettier --write"],
-    "**/*.{json,md,yml,yaml}": ["prettier --write"]
+    "backend/src/**/*.ts": [
+      "prettier --write"
+    ],
+    "frontend/src/**/*.ts": [
+      "prettier --write"
+    ],
+    "**/*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
-    "@prisma/client": "^5.10.0"
+    "@prisma/client": "^5.10.0",
+    "typescript": "5.4"
   }
 }
