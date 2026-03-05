@@ -1,0 +1,25 @@
+{
+  "name": "huis-helden",
+  "version": "1.0.0",
+  "description": "Gamified household chores tracker for families",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && ng serve",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && ng build",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:generate": "npx prisma generate",
+    "prisma:studio": "npx prisma studio"
+  },
+  "devDependencies": {
+    "prisma": "^5.10.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.10.0"
+  }
+}
