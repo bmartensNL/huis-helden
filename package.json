@@ -14,10 +14,21 @@
     "build:frontend": "cd frontend && ng build",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:generate": "npx prisma generate",
-    "prisma:studio": "npx prisma studio"
+    "prisma:studio": "npx prisma studio",
+    "prepare": "husky",
+    "lint": "cd backend && npm run lint && cd ../frontend && npm run lint",
+    "test": "cd backend && npm test && cd ../frontend && npm test",
+    "format": "prettier --write ."
   },
   "devDependencies": {
-    "prisma": "^5.10.0"
+    "prisma": "^5.10.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0"
+  },
+  "lint-staged": {
+    "backend/src/**/*.ts": ["prettier --write"],
+    "frontend/src/**/*.ts": ["prettier --write"],
+    "**/*.{json,md,yml,yaml}": ["prettier --write"]
   },
   "dependencies": {
     "@prisma/client": "^5.10.0"
